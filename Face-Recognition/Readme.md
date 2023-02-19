@@ -1,1 +1,1 @@
-Person Classification using Opencv
+# Face Recognition using Opencv
