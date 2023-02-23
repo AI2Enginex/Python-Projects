@@ -18,7 +18,7 @@ class Record_Camera:
         self.file_name = name_of_person
 
     def record_face(self):
-
+        
         while True:
             ret,frame = self.cap.read()
             gray_frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
@@ -79,15 +79,17 @@ class Image_canvas:
     def run_app(self):
 
         def run_code():
+            try:
+                entry_value = self.entry_widget.get()
+                name_value = self.name_widget.get()
+                if os.path.exists(entry_value):
+                    rc = Record_Camera(folder=entry_value,name_of_person=name_value)
+                    rc.record_face()
+                else:
+                    messagebox.showwarning(title="Error",message="worng folder path")
+            except Exception:
 
-            entry_value = self.entry_widget.get()
-            name_value = self.name_widget.get()
-            if os.path.exists(entry_value):
-                rc = Record_Camera(folder=entry_value,name_of_person=name_value)
-                rc.record_face()
-            else:
-
-                messagebox.showwarning(title="Error",message="worng folder path")
+                messagebox.showwarning(title="Error",message="camera not found")
                 
                 
         

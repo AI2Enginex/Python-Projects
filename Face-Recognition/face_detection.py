@@ -64,7 +64,7 @@ class Face_Recognition:
         while True:
             ret, frame = self.cap.read()
             if ret == False:
-                continue
+                break
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             faces = self.face_cascade.detectMultiScale(gray, 1.3, 5)
             
@@ -101,18 +101,20 @@ class Image_canvas:
     def run_app(self):
 
         def run_code():
-
-            entry_value = self.entry_widget.get() 
-            if os.path.exists(entry_value):
-                try:
+            try:
+                entry_value = self.entry_widget.get() 
+                if os.path.exists(entry_value):
                     fc = Face_Recognition(entry_value)
                     fc.display_frame()
-                except Exception:
-                    messagebox.showwarning(title="Error",message="add a forward  slash in the end")
+                else:
+                    messagebox.showwarning(title="Error",message="folder not found")
 
-            else:
 
-                messagebox.showwarning(title="Error",message="folder not found")
+            except Exception:
+                messagebox.showwarning(title="Error",message="wrong path")
+
+
+            
                 
                 
         
