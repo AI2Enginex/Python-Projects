@@ -1,5 +1,5 @@
 from hashlib import sha256
-
+    
 # Function to concatenate arguments and compute SHA-256 hash
 def updatehash(*args):
     text = ''
@@ -36,11 +36,12 @@ class Block:
 
 # Class representing a blockchain
 class Blockchain:
-    difficulty = 4  # Difficulty level for proof of work
+    
 
     # Constructor to initialize the blockchain with optional initial chain
-    def __init__(self, chain=[]):
+    def __init__(self, chain=[],difficulty):
         self.chain = chain
+        self.difficulty = difficulty # Difficulty level for proof of work
 
     # Function to add a block to the blockchain
     def add(self, block):
