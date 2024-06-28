@@ -52,7 +52,7 @@ Executes a SELECT * query on the specified table.
 
 Fetches the data and returns it as a Pandas DataFrame.
 
-create_table_schema Method:
+# create_table_schema Method:
 
 Parameters:
 
