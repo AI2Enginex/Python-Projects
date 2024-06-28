@@ -1,0 +1,101 @@
+// Staging process of ETL 
+// Loading data from external source to stages
+// Copyng data from stages to table
+
+show tables;
+create database ETL_PROJECTS;
+
+use ETL_PROJECTS;
+
+show tables;
+
+//Creating the table / Meta data
+
+CREATE OR REPLACE TABLE LOAN_PAYMENT (
+  "Loan_ID" STRING,
+  "loan_status" STRING,
+  "Principal" STRING,
+  "terms" STRING,
+  "effective_date" STRING,
+  "due_date" STRING,
+  "paid_off_time" STRING,
+  "past_due_days" STRING,
+  "age" STRING,
+  "education" STRING,
+  "Gender" STRING);
+  
+  show tables;
+  
+  select * from etl_projects.public.loan_payment;
+
+  
+ //Loading the data from S3 bucket
+ COPY INTO LOAN_PAYMENT
+    FROM s3://bucketsnowflakes3/Loan_payments_data.csv
+    file_format = (type = csv 
+                   field_delimiter = ',' 
+                   skip_header=1);
+
+// reviewing the data
+select * from loan_payment;
+
+// creating a schema
+CREATE OR REPLACE SCHEMA external_stages;
+
+// creating an external stage
+CREATE OR REPLACE STAGE aws_stage
+    url='s3://bucketsnowflakes3'
+    credentials=(aws_key_id='ABCD_DUMMY_ID' aws_secret_key='1234abcd_key');
+
+// description of the stage
+DESC STAGE aws_stage;
+
+
+// Publicly accessible staging area    
+CREATE OR REPLACE STAGE aws_stage
+    url='s3://bucketsnowflakes3';
+    
+// list all files in stage;
+LIST @aws_stage;
+
+
+CREATE OR REPLACE TABLE ORDERS_DATA (
+    ORDER_ID VARCHAR(30),
+    AMOUNT INT,
+    PROFIT INT,
+    QUANTITY INT,
+    CATEGORY VARCHAR(30),
+    SUBCATEGORY VARCHAR(30));
+
+    
+select * from orders_data;
+
+
+// Copy Data from stage to our table command with specified file(s)
+COPY INTO ORDERS_DATA
+    FROM @aws_stage
+    file_format= (type = csv field_delimiter=',' skip_header=1)
+    files = ('OrderDetails.csv');
+
+select * from orders_data;
+
+// Loading data using the SELECT statement
+
+// creating a new table
+CREATE OR REPLACE TABLE Orders (
+     order_id varchar(30),
+     amount INT
+);
+
+DESC TABLE Orders;
+
+select * from orders;
+
+// copying selected columns from the file to the table
+COPY INTO ORDERS
+    FROM (select s.$1, s.$2 from @aws_stage s)
+    file_format= (type = csv field_delimiter=',' skip_header=1)
+    files=('OrderDetails.csv');
+
+// Validate data after copying
+SELECT * FROM ORDERS;

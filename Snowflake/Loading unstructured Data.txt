@@ -1,0 +1,27 @@
+// Loading unstructured Data
+
+// First step: Load Raw JSON
+
+CREATE OR REPLACE stage JSONSTAGE
+     url='s3://bucketsnowflake-jsondemo';
+
+list @jsonstage;
+
+// Create a table to store JSON data
+CREATE OR REPLACE table JSON_RAW (
+    raw_file variant);
+
+// Create a JSON file format
+CREATE OR REPLACE file format JSONFORMAT
+    TYPE = JSON;
+    
+DESC table JSON_RAW;
+
+// Copy the file from stage to table
+COPY INTO JSON_RAW
+    FROM @JSONSTAGE
+    file_format= JSONFORMAT
+    files = ('HR_data.json');
+
+select * from JSON_RAW;
+    

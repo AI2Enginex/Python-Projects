@@ -1,0 +1,62 @@
+// Performing Window Functions
+// Loading data from local csv to table
+
+show tables;
+
+-- Setting up source data
+
+CREATE TABLE sales
+(
+    transaction_id integer,
+    transactional_date timestamp,
+   product_id character varying,
+    customer_id integer,
+    payment character varying,
+    credit_card bigint,
+    loyalty_card character varying,
+    cost character varying,
+    quantity integer,
+    price numeric,
+    PRIMARY KEY (transaction_id)
+);
+
+select * from sales;
+
+SELECT QUANTITY, SUM(PRICE) 
+FROM sales GROUP BY QUANTITY ORDER BY QUANTITY;
+
+SELECT
+    DISTINCT PAYMENT,
+    SUM(PRICE) OVER (ORDER BY PAYMENT ASC) AS CumulativePriceQuantity
+FROM Sales;
+
+SELECT
+    DISTINCT LOYALTY_CARD,
+    SUM(PRICE) OVER (ORDER BY LOYALTY_CARD) AS CumulativePriceQuantity
+FROM Sales;
+
+SELECT 
+    PAYMENT,
+    QUANTITY,
+    SUM(PRICE) OVER(PARTITION BY PAYMENT ORDER BY QUANTITY) AS SUM_OF_SALES,
+FROM SALES;
+ 
+SELECT PAYMENT, QUANTITY FROM SALES WHERE PAYMENT = 'mastercard';
+
+SELECT 
+    PAYMENT,
+    QUANTITY,
+    SUM(PRICE) as totalprice,
+FROM 
+    SALES
+GROUP BY
+      PAYMENT,QUANTITY ORDER BY PAYMENT;
+
+SELECT
+      PAYMENT,
+      SUM(PRICE) AS TOTAL_PRICE,
+      RANK() OVER(ORDER BY SUM(PRICE) DESC) 
+FROM SALES
+GROUP BY PAYMENT;
+
+

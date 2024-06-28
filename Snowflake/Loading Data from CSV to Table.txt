@@ -1,0 +1,33 @@
+// Loading Data from CSV to Table
+
+// Creating a Table Sales to store the file Data
+CREATE TABLE sales
+(
+    transaction_id integer,
+    transactional_date timestamp,
+   product_id character varying,
+    customer_id integer,
+    payment character varying,
+    credit_card bigint,
+    loyalty_card character varying,
+    cost character varying,
+    quantity integer,
+    price numeric,
+    PRIMARY KEY (transaction_id)
+);
+
+// load the data by clicking on the table name
+// and select the option to upload file
+
+// Table Description
+DESC TABLE sales;
+
+// Creating a CSV File Format
+CREATE OR REPLACE FILE FORMAT sales_csv
+    type = 'csv'
+    compression = 'none'
+    field_delimiter = ','
+    skip_header = 1;
+
+select * from sales;
+

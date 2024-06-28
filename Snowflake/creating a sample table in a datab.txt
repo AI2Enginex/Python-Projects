@@ -1,0 +1,66 @@
+// creating a sample table in a database with basic SQL functions
+
+-- Sample table creation for context (if needed)
+CREATE TABLE Fact_Sales (
+    FactID INT PRIMARY KEY,
+    DateKey INT,
+    Date DATE,
+    ProductKey INT,
+    CustomerKey INT,
+    SalespersonKey INT,
+    StoreKey INT,
+    SalesQuantity INT,
+    TransactionAmount DECIMAL(10, 2),
+    TotalSales DECIMAL(10, 2)
+);
+
+select * from fact_sales;
+
+
+-- Sample data insertion for context (if needed)
+INSERT INTO Fact_Sales (FactID, DateKey, Date, ProductKey, CustomerKey, SalespersonKey, StoreKey, SalesQuantity, TransactionAmount, TotalSales) VALUES
+(1, 20230101, '2023-01-01', 101, 201, 301, 401, 10, 150.00, 150.00),
+(2, 20230102, '2023-01-02', 102, 202, 302, 402, 20, 300.00, 300.00),
+(3, 20230103, '2023-01-03', 103, 203, 303, 403, 15, 225.00, 225.00),
+(4, 20230104, '2023-01-04', 104, 204, 304, 404, 25, 375.00, 375.00),
+(5, 20230105, '2023-01-05', 105, 205, 305, 405, 30, 450.00, 450.00),
+(6, 20230106, '2023-01-06', 106, 206, 306, 406, 10, 150.00, 150.00),
+(7, 20230107, '2023-01-07', 107, 207, 307, 407, 20, 300.00, 300.00),
+(8, 20230108, '2023-01-08', 108, 208, 308, 408, 15, 225.00, 225.00),
+(9, 20230109, '2023-01-09', 109, 209, 309, 409, 25, 375.00, 375.00),
+(10, 20230110, '2023-01-10', 110, 210, 310, 410, 30, 450.00, 450.00),
+(11, 20230201, '2023-02-01', 111, 211, 311, 411, 10, 150.00, 150.00),
+(12, 20230202, '2023-02-02', 112, 212, 312, 412, 20, 300.00, 300.00),
+(13, 20230203, '2023-02-03', 113, 213, 313, 413, 15, 225.00, 225.00),
+(14, 20230204, '2023-02-04', 114, 214, 314, 414, 25, 375.00, 375.00),
+(15, 20230205, '2023-02-05', 115, 215, 315, 415, 30, 450.00, 450.00),
+(16, 20230206, '2023-02-06', 116, 216, 316, 416, 10, 150.00, 150.00),
+(17, 20230207, '2023-02-07', 117, 217, 317, 417, 20, 300.00, 300.00),
+(18, 20230208, '2023-02-08', 118, 218, 318, 418, 15, 225.00, 225.00),
+(19, 20230209, '2023-02-09', 119, 219, 319, 419, 25, 375.00, 375.00),
+(20, 20230210, '2023-02-10', 120, 220, 320, 420, 30, 450.00, 450.00),
+(21, 20230301, '2023-03-01', 121, 221, 321, 421, 10, 150.00, 150.00),
+(22, 20230302, '2023-03-02', 122, 222, 322, 422, 20, 300.00, 300.00),
+(23, 20230303, '2023-03-03', 123, 223, 323, 423, 15, 225.00, 225.00);
+
+select * from fact_sales;
+
+SELECT COUNT(DISTINCT customerkey) as total_customers
+from fact_sales;
+
+SELECT COUNT(DISTINCT salesquantity) as total_quantity
+from fact_sales;
+
+SELECT salesquantity, SUM(totalsales) as sum_of_sales
+from fact_sales GROUP BY
+salesquantity;
+
+SELECT salesquantity, COUNT(salesquantity) as quantity_count
+from fact_sales GROUP BY
+salesquantity;
+
+SELECT salesquantity, ROUND(AVG(totalsales),2) as avg_of_sales
+from fact_sales GROUP BY
+salesquantity;
+
+
