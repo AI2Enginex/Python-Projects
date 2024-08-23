@@ -7,11 +7,11 @@ class ConnectionString:
 
     def __init__(self):
         self.conn_str = (
-                    'DRIVER={SQL Server};'
-                    'SERVER=looqupsqlserver.database.windows.net;'
+                    'DRIVER=################'
+                    'SERVER=############'
                     'DATABASE=consumerDB;'
-                    'UID=looqupadmin;'
-                    'PWD=L00uqup$dmin;')
+                    'UID=############'
+                    'PWD=############')
 
 class CreateEngine(ConnectionString):
 
