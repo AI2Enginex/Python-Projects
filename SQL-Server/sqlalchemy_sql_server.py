@@ -8,11 +8,11 @@ class ConnectionString:
 
     def __init__(self):
         self.conn_str = (
-                    'DRIVER={SQL Server};'
-                    'SERVER=looqupsqlserver.database.windows.net;'
-                    'DATABASE=consumerDB;'
-                    'UID=looqupadmin;'
-                    'PWD=L00uqup$dmin;')
+                    'DRIVER=#3######'
+                    'SERVER=########'
+                    'DATABASE=######'
+                    'UID=********'
+                    'PWD=********')
 
 # Class to create a SQLAlchemy engine, inherits from ConnectionString
 class CreateEngine(ConnectionString):
